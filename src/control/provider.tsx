@@ -1,10 +1,15 @@
-import { ReactNode } from 'react';
+import React from 'react';
 
 import StoreContext from './context';
 import { rootStoreInstance } from './ioc';
 
-function RootStoreProvider({ children }: { children: ReactNode }) {
-    const root = rootStoreInstance;
+interface IProps {
+    children: React.ReactNode;
+    mockStore?: any;
+}
+
+function RootStoreProvider({ children, mockStore }: IProps) {
+    const root = mockStore ?? rootStoreInstance;
 
     return (
         <StoreContext.Provider value={root}>{children}</StoreContext.Provider>
