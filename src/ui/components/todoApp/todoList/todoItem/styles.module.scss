@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    padding: 0.5rem 1rem;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+.text {
+    color: var(--surface-500);
+    font-size: 14px;
+    font-weight: 400;
+}

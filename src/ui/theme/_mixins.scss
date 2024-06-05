@@ -1,0 +1,30 @@
+@import './variables';
+
+@mixin custom-scrollbars {
+    overflow-y: auto;
+
+    --scrollbar-foreground: #{var(--blue-300)};
+    --scrollbar-background: #{var(--blue-100)};
+    --scrollbar-size: 6px;
+    --scrollbar-radius: 6px;
+
+    &::-webkit-scrollbar {
+        width: var(--scrollbar-size);
+        height: var(--scrollbar-size);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-foreground);
+        border-radius: var(--scrollbar-radius);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--scrollbar-background);
+        border-radius: var(--scrollbar-radius);
+    }
+
+    @supports not selector(::-webkit-scrollbar) {
+        scrollbar-color: var(--scrollbar-foreground) var(--scrollbar-background);
+        scrollbar-width: thin;
+    }
+}

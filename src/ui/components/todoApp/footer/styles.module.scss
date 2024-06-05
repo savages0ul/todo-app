@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: var(--blue-200);
+    border-radius: 10px;
+}
+
+.wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+.text {
+    color: var(--pink-500);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .wrapper {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .button {
+        width: 200px;
+    }
+
+    .clearButton {
+        width: 100%;
+    }
+}

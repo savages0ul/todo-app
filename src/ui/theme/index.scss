@@ -1,0 +1,26 @@
+@use 'primereact/resources/primereact.min.css';
+@use 'primereact/resources/themes/lara-light-blue/theme.css';
+@use 'primeflex/primeflex.min.css';
+@use 'primeicons/primeicons.css';
+@import './variables';
+@import './_mixins';
+
+html {
+    font-size: $global-font-size;
+    font-family: var(--font-family);
+}
+
+body {
+    margin: 0;
+
+    .root {
+        height: 100%;
+    }
+}
+
+[class~='p-button'] {
+    &:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
