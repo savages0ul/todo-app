@@ -18,6 +18,18 @@
     font-weight: 500;
 }
 
+.allButton {
+    min-width: 65px;
+}
+
+.activeButton {
+    min-width: 87px;
+}
+
+.completedButton {
+    min-width: 114px;
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;

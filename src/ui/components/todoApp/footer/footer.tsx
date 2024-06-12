@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Button } from 'primereact/button';
+import { classNames } from 'primereact/utils';
 
 import { useStores } from '../../../../control';
 import styles from './styles.module.scss';
@@ -17,6 +18,7 @@ const Footer = () => {
         allMode,
         activeMode,
         completedMode,
+        allRecords,
     } = todoList;
     return (
         <div className={styles.container}>
@@ -25,23 +27,43 @@ const Footer = () => {
                 <Button
                     label="All"
                     onClick={updateAllMode}
-                    text={!allMode}
                     severity="help"
-                    className={styles.button}
+                    className={classNames(styles.button, styles.allButton)}
+                    outlined={!allMode}
+                    badge={
+                        (allRecords.length && allRecords.length.toString()) ||
+                        ''
+                    }
+                    badgeClassName="p-badge-danger"
                 />
                 <Button
                     label="Active"
                     onClick={updateActiveMode}
-                    text={!activeMode}
                     severity="help"
-                    className={styles.button}
+                    className={classNames(styles.button, styles.activeButton)}
+                    outlined={!activeMode}
+                    badge={
+                        (activeRecords.length &&
+                            activeRecords.length.toString()) ||
+                        ''
+                    }
+                    badgeClassName="p-badge-danger"
                 />
                 <Button
                     label="Completed"
                     onClick={updateCompletedMode}
-                    text={!completedMode}
                     severity="help"
-                    className={styles.button}
+                    className={classNames(
+                        styles.button,
+                        styles.completedButton
+                    )}
+                    outlined={!completedMode}
+                    badge={
+                        (completedRecords.length &&
+                            completedRecords.length.toString()) ||
+                        ''
+                    }
+                    badgeClassName="p-badge-danger"
                 />
             </div>
             <Button
@@ -50,6 +72,7 @@ const Footer = () => {
                 disabled={!completedRecords.length}
                 severity="danger"
                 className={styles.clearButton}
+                icon="pi pi-trash"
             />
         </div>
     );
