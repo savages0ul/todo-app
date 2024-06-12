@@ -30,6 +30,16 @@
     min-width: 114px;
 }
 
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    [class='p-button-label p-c'] {
+        flex: initial;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -42,10 +52,6 @@
     }
 
     .button {
-        width: 200px;
-    }
-
-    .clearButton {
         width: 100%;
     }
 }

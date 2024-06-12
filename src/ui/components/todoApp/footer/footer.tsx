@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Button } from 'primereact/button';
+import { confirmDialog } from 'primereact/confirmdialog';
 import { classNames } from 'primereact/utils';
 
 import { useStores } from '../../../../control';
@@ -20,6 +21,18 @@ const Footer = () => {
         completedMode,
         allRecords,
     } = todoList;
+
+    const confirmDeleteCompletedItems = () => {
+        confirmDialog({
+            message: 'Are you sure you want to delete completed items?',
+            header: 'Confirm deletion',
+            icon: 'pi pi-info-circle',
+            acceptClassName: 'p-button-danger',
+            accept: clearCompletedRecords,
+            reject: () => {},
+        });
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.text}>{activeRecords.length} items left</div>
@@ -68,10 +81,10 @@ const Footer = () => {
             </div>
             <Button
                 label="Clear completed"
-                onClick={clearCompletedRecords}
+                onClick={confirmDeleteCompletedItems}
                 disabled={!completedRecords.length}
                 severity="danger"
-                className={styles.clearButton}
+                className={styles.button}
                 icon="pi pi-trash"
             />
         </div>

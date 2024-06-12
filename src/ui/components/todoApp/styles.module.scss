@@ -21,3 +21,9 @@
     font-size: 30px;
     font-weight: 600;
 }
+
+@media (max-width: 768px) {
+    .dialog {
+        margin: 2rem;
+    }
+}
