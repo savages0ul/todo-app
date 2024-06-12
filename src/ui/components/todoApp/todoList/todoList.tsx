@@ -25,14 +25,20 @@ const TodoList = () => {
     };
 
     const records = getRecords();
+    const hasFewRecords = records && records.length < 6;
+    const hasManyRecords = records && records.length > 5;
 
     return (
         <div
             className={classNames(styles.root, {
-                [styles.pr]: records && records.length > 5,
+                [styles.prRoot]: hasFewRecords,
             })}
         >
-            <div className={styles.container}>
+            <div
+                className={classNames(styles.container, {
+                    [styles.prContainer]: hasManyRecords,
+                })}
+            >
                 {records?.map((item: TTodoItem) => (
                     <TodoItem key={item.id} item={item} />
                 ))}

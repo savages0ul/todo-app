@@ -38,6 +38,7 @@ const TodoInput = () => {
                     disabled={!value.trim()}
                     severity="success"
                     icon="pi pi-plus"
+                    className={styles.button}
                 />
             </div>
         </form>
