@@ -21,8 +21,61 @@ class TodoList {
     @observable
     activeMode: boolean = false;
 
+    localStorageKey = 'todoList';
+
     constructor() {
         makeObservable(this);
+        this.loadFromLocalStorage();
+    }
+
+    loadFromLocalStorage() {
+        const storedData = localStorage.getItem(this.localStorageKey);
+        if (storedData) {
+            const {
+                allRecords,
+                completedRecords,
+                activeRecords,
+                allMode,
+                completedMode,
+                activeMode,
+            } = JSON.parse(storedData);
+            this.allRecords = allRecords.map(
+                (item: TTodoItem) => new TodoItem(item, this.toggleCompleted)
+            );
+            this.completedRecords = completedRecords.map(
+                (item: TTodoItem) => new TodoItem(item, this.toggleCompleted)
+            );
+            this.activeRecords = activeRecords.map(
+                (item: TTodoItem) => new TodoItem(item, this.toggleCompleted)
+            );
+            this.allMode = allMode;
+            this.completedMode = completedMode;
+            this.activeMode = activeMode;
+        }
+    }
+
+    saveToLocalStorage() {
+        const dataToStore = {
+            allRecords: this.allRecords.map((item) => ({
+                id: item.id,
+                title: item.title,
+                isCompleted: item.isCompleted,
+            })),
+            completedRecords: this.completedRecords.map((item) => ({
+                id: item.id,
+                title: item.title,
+                isCompleted: item.isCompleted,
+            })),
+            activeRecords: this.activeRecords.map((item) => ({
+                id: item.id,
+                title: item.title,
+                isCompleted: item.isCompleted,
+            })),
+            allMode: this.allMode,
+            completedMode: this.completedMode,
+            activeMode: this.activeMode,
+        };
+        localStorage.setItem(this.localStorageKey, JSON.stringify(dataToStore));
     }
 
     @action
@@ -36,13 +89,14 @@ class TodoList {
         this.allRecords[index].isCompleted =
             !this.allRecords[index].isCompleted;
 
-        this.completedRecords = this.allRecords.filter(
-            (item) => item.isCompleted
+        this.updateCompletedRecords(
+            this.allRecords.filter((item) => item.isCompleted)
+        );
+        this.updateActiveRecords(
+            this.allRecords.filter((item) => !item.isCompleted)
         );
 
-        this.activeRecords = this.allRecords.filter(
-            (item) => !item.isCompleted
-        );
+        this.saveToLocalStorage();
     };
 
     clearCompletedRecords = () => {
@@ -51,6 +105,7 @@ class TodoList {
         );
         this.updateAllRecords(notCompleted);
         this.updateCompletedRecords([]);
+        this.saveToLocalStorage();
     };
 
     @action
@@ -64,17 +119,28 @@ class TodoList {
             this.toggleCompleted
         );
         this.allRecords.push(newItem);
-        this.activeRecords.push(newItem);
+        if (!newItem.isCompleted) {
+            this.activeRecords.push(newItem);
+        }
+        this.saveToLocalStorage();
     };
 
     @action
     updateAllRecords = (records: TTodoItem[]) => {
         this.allRecords = records;
+        this.saveToLocalStorage();
     };
 
     @action
     updateCompletedRecords = (records: TTodoItem[]) => {
         this.completedRecords = records;
+        this.saveToLocalStorage();
+    };
+
+    @action
+    updateActiveRecords = (records: TTodoItem[]) => {
+        this.activeRecords = records;
+        this.saveToLocalStorage();
     };
 
     @action
@@ -82,6 +148,7 @@ class TodoList {
         this.allMode = true;
         this.completedMode = false;
         this.activeMode = false;
+        this.saveToLocalStorage();
     };
 
     @action
@@ -89,6 +156,7 @@ class TodoList {
         this.allMode = false;
         this.completedMode = true;
         this.activeMode = false;
+        this.saveToLocalStorage();
     };
 
     @action
@@ -96,6 +164,7 @@ class TodoList {
         this.allMode = false;
         this.completedMode = false;
         this.activeMode = true;
+        this.saveToLocalStorage();
     };
 }
 
